@@ -128,7 +128,7 @@ body {
 }
 .animate-fade-up {
   animation: fade-up 1000ms cubic-bezier(.2,.8,.2,1) both;
-    animation-delay: 200ms;
+    animation-delay: 500ms;
 }
 
 
@@ -139,7 +139,7 @@ body {
 }
 .animate-fade-down {
   animation: fade-down 1500ms cubic-bezier(.2,.8,.2,1) both;
-  animation-delay: 200ms;
+  animation-delay: 500ms;
 
 }
 

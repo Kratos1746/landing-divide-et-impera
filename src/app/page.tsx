@@ -104,15 +104,15 @@ export default function Page() {
       alt=""
       fill
       priority
-      className="object-cover object-center scale-[1.08] sm:scale-[1.05]"
+      className="object-cover object-center "
     />
   </div>
 
   {/* Overlay premium */}
   <div className="absolute inset-0 z-10">
-    <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/55 to-black/75" />
+    <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/25 to-black/65" />
     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.35),rgba(0,0,0,0.78))]" />
-    <div className="absolute inset-0 opacity-[0.12] mix-blend-overlay [background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%222%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22120%22 height=%22120%22 filter=%22url(%23n)%22 opacity=%220.35%22/%3E%3C/svg%3E')]" />
+    <div className="absolute inset-0 opacity-[0.22] mix-blend-overlay [background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%222%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22120%22 height=%22120%22 filter=%22url(%23n)%22 opacity=%220.35%22/%3E%3C/svg%3E')]" />
   </div>
 
         {/* Contenuto */}

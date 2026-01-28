@@ -43,104 +43,48 @@ body {
 }
 
 /* =========================
-   SAFE animation helpers
-   (prevents initial flash / jank on mobile)
-   - Does NOT change your durations/delays/easing
-   - Use by adding: anim-safe (or anim-safe-up/down/left)
+   Scroll reveal base (FIX SCATTI)
+   - NON forziamo opacity:1 quando diventa visibile
+   - l’opacity la gestisce l’animazione stessa
 ========================= */
-
-/* Base: evita flash prima che l’animazione venga applicata */
-.anim-safe {
-  opacity: 0;
-  will-change: opacity, transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-}
-
-/* Varianti opzionali: se vuoi forzare subito un transform “coerente”
-   prima che l’animazione parta (utile su mobile) */
-.anim-safe-up {
-  opacity: 0;
-  will-change: opacity, transform;
-  backface-visibility: hidden;
-  transform: translate3d(0, 60px, 0) translateZ(0);
-}
-
-.anim-safe-down {
-  opacity: 0;
-  will-change: opacity, transform;
-  backface-visibility: hidden;
-  transform: translate3d(0, -60px, 0) translateZ(0);
-}
-
-.anim-safe-left {
-  opacity: 0;
-  will-change: opacity, transform;
-  backface-visibility: hidden;
-  transform: translate3d(-160px, 0, 0) translateZ(0);
-}
-
-/* IMPORTANT:
-   Le tue classi .animate-* restano IDENTICHE.
-   L’unica cosa: applica anche una .anim-safe-* in JSX per evitare lo “scatto”.
-*/
-
-
-/* Scroll reveal base */
 .reveal {
   opacity: 0;
   will-change: transform, opacity;
 }
 
+/* IMPORTANT: niente opacity qui (evita jump su iOS/Android) */
 .reveal.is-visible {
-  opacity: 1;
+  /* no-op on purpose */
 }
 
-
 /* =========================
-   Custom animations (from tailwind.config.ts)
-   Paste into globals.css
+   Custom animations (unchanged keyframes)
 ========================= */
 
 /* --- dot-1 / dot-2 / dot-3 --- */
 @keyframes dot-1 {
-  0%, 20% { opacity: 0; }
+  0%, 20% { opacity: 0.15; }
   30%, 100% { opacity: 1; }
 }
 @keyframes dot-2 {
-  0%, 40% { opacity: 0; }
+  0%, 40% { opacity: 0.15; }
   50%, 100% { opacity: 1; }
 }
 @keyframes dot-3 {
-  0%, 60% { opacity: 0; }
+  0%, 60% { opacity: 0.15; }
   70%, 100% { opacity: 1; }
 }
-
-.animate-dot-1 { animation: dot-1 1.4s infinite; }
-.animate-dot-2 { animation: dot-2 1.4s infinite; }
-.animate-dot-3 { animation: dot-3 1.4s infinite; }
-
 
 /* --- fade-up --- */
 @keyframes fade-up {
   0% { opacity: 0; transform: translate3d(0, 60px, 0); }
   100% { opacity: 1; transform: translate3d(0, 0, 0); }
 }
-.animate-fade-up {
-  animation: fade-up 1000ms cubic-bezier(.2,.8,.2,1) both;
-    animation-delay: 500ms;
-}
-
 
 /* --- fade-down --- */
 @keyframes fade-down {
   0% { opacity: 0; transform: translate3d(0, -60px, 0); }
   100% { opacity: 1; transform: translate3d(0, 0, 0); }
-}
-.animate-fade-down {
-  animation: fade-down 1500ms cubic-bezier(.2,.8,.2,1) both;
-  animation-delay: 500ms;
-
 }
 
 /* --- fade-down-slow --- */
@@ -148,35 +92,14 @@ body {
   0% { opacity: 0; transform: translate3d(0, -60px, 0); }
   100% { opacity: 1; transform: translate3d(0, 0, 0); }
 }
-.animate-fade-down-slow {
-  animation: fade-down-slow 1500ms cubic-bezier(.2,.8,.2,1) both;
-  animation-delay: 500ms;
-}
 
-/* =========================
-   Fade Right (premium)
-========================= */
-
+/* --- fade-right --- */
 @keyframes fade-right {
-  0% {
-    opacity: 0;
-    transform: translate3d(-160px, 0, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
+  0% { opacity: 0; transform: translate3d(-160px, 0, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
-.animate-fade-right {
-  animation: fade-right 2000ms cubic-bezier(.2,.8,.2,1) both;
-  animation-delay: 200ms;
-  
-}
-
-
-
-/* --- fade-in + soft scale (premium) --- */
+/* --- fade-in + soft scale (down) --- */
 @keyframes fade-in-scale-down {
   0% {
     opacity: 0;
@@ -188,15 +111,7 @@ body {
   }
 }
 
-.animate-fade-in {
-  animation: fade-in-scale-down 1000ms cubic-bezier(.2,.8,.2,1) both;
-  animation-delay: 200ms;
-  will-change: opacity, transform;
-}
-
-
-
-/* --- fade-in + soft scale (premium) --- */
+/* --- fade-in + soft scale (up) --- */
 @keyframes fade-in-scale-up {
   0% {
     opacity: 0;
@@ -208,29 +123,92 @@ body {
   }
 }
 
-.animate-fade-in-up {
-  animation: fade-in-scale-up 1000ms cubic-bezier(.2,.8,.2,1) both;
-  animation-delay: 100ms;
-  will-change: opacity, transform;
-}
-
-
 /* --- soft-pop --- */
 @keyframes soft-pop {
   0% { opacity: 0; transform: scale(0.985); }
   100% { opacity: 1; transform: scale(1); }
 }
-.animate-soft-pop {
-  animation: soft-pop 700ms cubic-bezier(.2,.8,.2,1) both;
-}
-
 
 /* --- float-slow --- */
 @keyframes float-slow {
   0%, 100% { transform: translate3d(0, 0, 0); }
   50% { transform: translate3d(0, -6px, 0); }
 }
-.animate-float-slow {
-  animation: float-slow 6s ease-in-out infinite;
+
+/* =========================
+   MOTION-SAFE (CSS)
+   Mantiene DURATE/DELAY identici ai tuoi.
+========================= */
+@media (prefers-reduced-motion: no-preference) {
+
+  .animate-dot-1 { animation: dot-1 1.4s infinite; }
+  .animate-dot-2 { animation: dot-2 1.4s infinite; }
+  .animate-dot-3 { animation: dot-3 1.4s infinite; }
+
+  .animate-fade-up {
+    animation: fade-up 1000ms cubic-bezier(.2,.8,.2,1) both;
+    animation-delay: 200ms;
+  }
+
+  .animate-fade-down {
+    animation: fade-down 1500ms cubic-bezier(.2,.8,.2,1) both;
+    animation-delay: 200ms;
+  }
+
+  .animate-fade-down-slow {
+    animation: fade-down-slow 1500ms cubic-bezier(.2,.8,.2,1) both;
+    animation-delay: 500ms;
+  }
+
+  .animate-fade-right {
+    animation: fade-right 2000ms cubic-bezier(.2,.8,.2,1) both;
+    animation-delay: 200ms;
+  }
+
+  .animate-fade-in {
+    animation: fade-in-scale-down 1000ms cubic-bezier(.2,.8,.2,1) both;
+    animation-delay: 200ms;
+    will-change: opacity, transform;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-scale-up 1000ms cubic-bezier(.2,.8,.2,1) both;
+    animation-delay: 100ms;
+    will-change: opacity, transform;
+  }
+
+  .animate-soft-pop {
+    animation: soft-pop 700ms cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  .animate-float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+  }
 }
 
+/* =========================
+   REDUCED MOTION fallback
+   - niente elementi "invisibili"
+========================= */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none !important;
+  }
+
+  .animate-dot-1,
+  .animate-dot-2,
+  .animate-dot-3,
+  .animate-fade-up,
+  .animate-fade-down,
+  .animate-fade-down-slow,
+  .animate-fade-right,
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-soft-pop,
+  .animate-float-slow {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

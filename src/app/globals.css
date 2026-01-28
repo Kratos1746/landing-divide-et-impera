@@ -1,17 +1,23 @@
 @import "tailwindcss";
 
+/* Colori di base (coerenti) */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a; /* slate-900 */
 }
 
+/* Tailwind v4 theme tokens */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+
+  /* Mappa i font (next/font -> CSS variables) */
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-source-serif);
   --font-mono: var(--font-geist-mono);
 }
 
+/* Se vuoi supportare dark-mode in futuro */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,8 +25,166 @@
   }
 }
 
+/* Base typography */
+html,
+body {
+  height: 100%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system,
+    Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+    "Segoe UI Emoji";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Scroll reveal base */
+.reveal {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+}
+
+
+/* =========================
+   Custom animations (from tailwind.config.ts)
+   Paste into globals.css
+========================= */
+
+/* --- dot-1 / dot-2 / dot-3 --- */
+@keyframes dot-1 {
+  0%, 20% { opacity: 0; }
+  30%, 100% { opacity: 1; }
+}
+@keyframes dot-2 {
+  0%, 40% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+@keyframes dot-3 {
+  0%, 60% { opacity: 0; }
+  70%, 100% { opacity: 1; }
+}
+
+.animate-dot-1 { animation: dot-1 1.4s infinite; }
+.animate-dot-2 { animation: dot-2 1.4s infinite; }
+.animate-dot-3 { animation: dot-3 1.4s infinite; }
+
+
+/* --- fade-up --- */
+@keyframes fade-up {
+  0% { opacity: 0; transform: translate3d(0, 120px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.animate-fade-up {
+  animation: fade-up 1000ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+
+/* --- fade-down --- */
+@keyframes fade-down {
+  0% { opacity: 0; transform: translate3d(0, -60px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.animate-fade-down {
+  animation: fade-down 1500ms cubic-bezier(.2,.8,.2,1) both;
+
+}
+
+/* --- fade-down-slow --- */
+@keyframes fade-down-slow {
+  0% { opacity: 0; transform: translate3d(0, -60px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.animate-fade-down-slow {
+  animation: fade-down-slow 1500ms cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: 500ms;
+}
+
+/* =========================
+   Fade Right (premium)
+========================= */
+
+@keyframes fade-right {
+  0% {
+    opacity: 0;
+    transform: translate3d(-160px, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-fade-right {
+  animation: fade-right 2000ms cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: 200ms;
+  
+}
+
+
+
+/* --- fade-in + soft scale (premium) --- */
+@keyframes fade-in-scale-down {
+  0% {
+    opacity: 0;
+    transform: scale(0.885) translate3d(0, -22px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in-scale-down 1000ms cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: 200ms;
+  will-change: opacity, transform;
+}
+
+
+
+/* --- fade-in + soft scale (premium) --- */
+@keyframes fade-in-scale-up {
+  0% {
+    opacity: 0;
+    transform: scale(0.885) translate3d(0, 22px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-scale-up 1000ms cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: 100ms;
+  will-change: opacity, transform;
+}
+
+
+/* --- soft-pop --- */
+@keyframes soft-pop {
+  0% { opacity: 0; transform: scale(0.985); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-soft-pop {
+  animation: soft-pop 700ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+
+/* --- float-slow --- */
+@keyframes float-slow {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -6px, 0); }
+}
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+

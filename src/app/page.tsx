@@ -96,22 +96,27 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-white text-slate-900">
       {/* HERO */}
-      <section
-        className="relative bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/sfondo-1.png')",
-          backgroundAttachment: "fixed",
-        }}
-      >
-        {/* Overlay premium: vignetta + gradient + grain */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/55 to-black/75" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.35),rgba(0,0,0,0.78))]" />
-          <div className="absolute inset-0 opacity-[0.12] mix-blend-overlay [background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%222%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22120%22 height=%22120%22 filter=%22url(%23n)%22 opacity=%220.35%22/%3E%3C/svg%3E')]" />
-        </div>
+ <section className="relative isolate min-h-screen overflow-hidden">
+  {/* Background image layer */}
+  <div className="absolute inset-0 z-0">
+    <Image
+      src="/sfondo-1.png"
+      alt=""
+      fill
+      priority
+      className="object-cover object-center scale-[1.08] sm:scale-[1.05]"
+    />
+  </div>
+
+  {/* Overlay premium */}
+  <div className="absolute inset-0 z-10">
+    <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/55 to-black/75" />
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.35),rgba(0,0,0,0.78))]" />
+    <div className="absolute inset-0 opacity-[0.12] mix-blend-overlay [background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%222%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22120%22 height=%22120%22 filter=%22url(%23n)%22 opacity=%220.35%22/%3E%3C/svg%3E')]" />
+  </div>
 
         {/* Contenuto */}
-        <div className="relative px-4 py-8 lg:py-14">
+        <div className="relative py-6 lg:py-12 px-4  z-20">
           {/* TOP: Logo + Banner */}
           <header className="pb-4 lg:pb-10">
             <div className="mx-auto w-full max-w-full px-4">

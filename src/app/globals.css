@@ -42,6 +42,50 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* =========================
+   SAFE animation helpers
+   (prevents initial flash / jank on mobile)
+   - Does NOT change your durations/delays/easing
+   - Use by adding: anim-safe (or anim-safe-up/down/left)
+========================= */
+
+/* Base: evita flash prima che l’animazione venga applicata */
+.anim-safe {
+  opacity: 0;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Varianti opzionali: se vuoi forzare subito un transform “coerente”
+   prima che l’animazione parta (utile su mobile) */
+.anim-safe-up {
+  opacity: 0;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 60px, 0) translateZ(0);
+}
+
+.anim-safe-down {
+  opacity: 0;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, -60px, 0) translateZ(0);
+}
+
+.anim-safe-left {
+  opacity: 0;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  transform: translate3d(-160px, 0, 0) translateZ(0);
+}
+
+/* IMPORTANT:
+   Le tue classi .animate-* restano IDENTICHE.
+   L’unica cosa: applica anche una .anim-safe-* in JSX per evitare lo “scatto”.
+*/
+
+
 /* Scroll reveal base */
 .reveal {
   opacity: 0;

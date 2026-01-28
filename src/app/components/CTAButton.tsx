@@ -80,7 +80,7 @@ export function CTAButton({
   };
 
   return (
-    <Reveal inViewClassName="animate-fade-up" delay={100}>
+    <Reveal inViewClassName="anim-safe-up animate-fade-up" delay={100}>
     <a
       href={href}
       target={openInNewTab ? "_blank" : undefined}

@@ -70,7 +70,7 @@ function SoftBox({
   className?: string;
 }) {
   return (
-    <Reveal inViewClassName="animate-fade-down" delay={100}>
+    <Reveal inViewClassName="anim-safe-down animate-fade-down" delay={100}>
     <div
       className={[
         "rounded-3xl border border-slate-200/60 bg-[#EEF3F8]/80 shadow-sm backdrop-blur",
@@ -201,7 +201,7 @@ export default function Page() {
             </h2>
 
             <p>Si pensa che una campagna marketing profittevole debba avere grandi flussi di traffico.</p>
-          <Reveal inViewClassName="animate-fade-in-up" delay={100}>
+          <Reveal inViewClassName="anim-safe-up animate-fade-in-up" delay={100}>
             <BlueBox className="text-center">
               <p className="text-xl font-semibold uppercase tracking-wide">Sbagliato.</p>
             </BlueBox>
@@ -289,7 +289,7 @@ export default function Page() {
             <p>
               Mentre il mercato è saturo di "esperti" che gridano ai quattro venti sempre le stesse soluzioni standard:
             </p>
-          <Reveal inViewClassName="animate-fade-in-up" delay={100}>
+          <Reveal inViewClassName="anim-safe-up animate-fade-in-up" delay={100}>
             <BlueBox>
               <div className="space-y-3">
                 <p>* "Devi postare ogni giorno ed essere onnipresente" (trasformandoti in un impiegato dei social network).</p>
@@ -348,7 +348,7 @@ export default function Page() {
             <p>
               Se vuoi capire come approcciare il metodo <b><i>"Divide et Impera"</i></b> alle tue campagne marketing, clicca il tasto qui sotto per prenotare <b>un'analisi di Fattibilità</b> di 30 minuti.
             </p>
-          <Reveal inViewClassName="animate-fade-in-up" delay={100}>
+          <Reveal inViewClassName="anim-safe-up animate-fade-in-up" delay={100}>
             <BlueBox>
               <p className="font-semibold">
                 <b>ATTENZIONE:</b> Non accetto progetti a <i>"scatola chiusa"</i>. Il protocollo <b><i>"Divide et Impera"</i></b> è un amplificatore di risultati, non una bacchetta magica. Per questo motivo, non vendo nulla senza prima aver analizzato i numeri.
@@ -412,7 +412,7 @@ export default function Page() {
 
             <div className="grid grid-cols-1 lg:grid-cols-[420px_1fr] lg:items-center">
               {/* FOTO + TARGHETTA */}
-              <Reveal inViewClassName="animate-fade-up lg:animate-fade-right" delay={500}>
+              <Reveal inViewClassName="anim-safe-up animate-fade-up lg:animate-fade-right" delay={500}>
               <div className="relative flex justify-center lg:justify-start max-w-full px-4 lg:-ml-8">
                 <div className="relative w-full max-w-3xl sm:max-w-95 lg:sticky lg:top-1/2 -translate-y-1/12 lg:-translate-y-1/5">
                   <div className="relative aspect-4/5 w-full ml-1">

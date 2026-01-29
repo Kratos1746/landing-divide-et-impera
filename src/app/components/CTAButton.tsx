@@ -18,9 +18,9 @@ export function CTAButton({
 }: CTAButtonProps) {
   const ENTER_MS = 900;
 
-  const [isHovered, setIsHovered] = useState(false);
   const [showRing, setShowRing] = useState(false);
   const [ringKey, setRingKey] = useState(0);
+  const [shineKey, setShineKey] = useState(0);
 
   const lockedRef = useRef(false);
   const tRef = useRef<number | null>(null);
@@ -31,12 +31,15 @@ export function CTAButton({
     };
   }, []);
 
-  const playEnterRingOnce = () => {
-    // se l’anello è già in corso, non ripartire (evita doppie animazioni)
+  const playEnterOnce = () => {
+    // Se l'anello è già in corso, non ripartire (evita doppie animazioni)
     if (showRing) return;
 
     setShowRing(true);
     setRingKey((k) => k + 1);
+
+    // Lo shine lo facciamo ripartire sempre quando parte l’anello
+    setShineKey((k) => k + 1);
 
     if (tRef.current) window.clearTimeout(tRef.current);
     tRef.current = window.setTimeout(() => {
@@ -54,14 +57,12 @@ export function CTAButton({
 
   const onMouseEnter = () => {
     if (lockedRef.current) return;
-    setIsHovered(true);
-    playEnterRingOnce();
+    playEnterOnce();
   };
 
   const onMouseLeave = () => {
     if (lockedRef.current) return;
-    // ✅ ritorno “semplice”: niente ring
-    setIsHovered(false);
+    // ✅ ritorno semplice: nessuna animazione “di uscita”
   };
 
   const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -69,9 +70,8 @@ export function CTAButton({
     if (lockedRef.current) return;
     lockedRef.current = true;
 
-    // su mobile (tap) portiamo allo stato hovered e facciamo l’anello
-    setIsHovered(true);
-    playEnterRingOnce();
+    // su mobile (tap) facciamo partire l'anello + shine prima di aprire Calendly
+    playEnterOnce();
 
     window.setTimeout(() => {
       openCalendly();
@@ -81,51 +81,48 @@ export function CTAButton({
 
   return (
     <Reveal inViewClassName="anim-safe-up animate-fade-up" delay={100}>
-    <a
-      href={href}
-      target={openInNewTab ? "_blank" : undefined}
-      rel={openInNewTab ? "noopener noreferrer" : undefined}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      onClick={onClick}
-      className={[
-        "relative inline-flex w-full items-center justify-center overflow-hidden rounded-2xl",
-        "px-6 py-4 text-base lg:text-lg font-semibold text-center select-none",
-        "shadow-lg shadow-black/30",
-        // ✅ transizioni premium fluide (ritorno incluso)
-        "transition-[transform,background-color,color,border-color,box-shadow] duration-500 ease-[cubic-bezier(.2,.8,.2,1)]",
-        "hover:scale-[1.02]",
-        isHovered ? "bg-white text-[#1E3A5F]" : "bg-[#1E3A5F] text-white",
-        className,
-      ].join(" ")}
-    >
-      {/* Bordo statico: blu in hover, grigio/chiaro in base */}
-      <span
+      <span className="inline-block w-full transition-transform duration-500 ease-[cubic-bezier(.2,.8,.2,1)] hover:scale-[1.02]">
+      <a
+        href={href}
+        target={openInNewTab ? "_blank" : undefined}
+        rel={openInNewTab ? "noopener noreferrer" : undefined}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onClick={onClick}
         className={[
-          "pointer-events-none absolute inset-0 rounded-2xl border",
-          "transition-[border-color,box-shadow] duration-400 ease-[cubic-bezier(.2,.8,.2,1)]",
-          isHovered ? "border-[#1E3A5F]" : "border-white/40",
-          isHovered ? "shadow-[0_0_0_2px_rgba(30,58,95,0.10)]" : "",
+          "group relative inline-flex w-full items-center justify-center overflow-hidden rounded-2xl",
+          "px-6 py-4 text-base lg:text-lg font-semibold text-center select-none",
+          "bg-[#1E3A5F] text-white shadow-lg shadow-black/30",
+          "transition-shadow duration-500 ease-[cubic-bezier(.2,.8,.2,1)]",
+          className,
         ].join(" ")}
-      />
+      >
+        {/* Bordo statico base (leggero) */}
+        <span
+          className={[
+            "pointer-events-none absolute inset-0 rounded-2xl border",
+            "border-white/25",
+            "transition-[border-color,box-shadow] duration-400 ease-[cubic-bezier(.2,.8,.2,1)]",
+            "group-hover:border-white/50",
+          ].join(" ")}
+        />
 
-      {/* Ring SOLO in entrata (1 giro) */}
-      {showRing && (
-        <span key={ringKey} className="pointer-events-none absolute inset-0 rounded-2xl">
+        {/* Shine (parte 1 volta a hover/tap) */}
+        <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
           <span
-            className="absolute -inset-0.5 rounded-[18px] animate-[spin_900ms_linear_1]"
-            style={{
-              background:
-                "conic-gradient(from 180deg, rgba(30,58,95,0.10), rgba(30,58,95,1), rgba(30,58,95,0.10))",
-            }}
+            key={shineKey}
+            className={[
+              "absolute top-0 left-[-50%] h-full w-full z-10",
+              "bg-linear-to-r from-transparent via-white/95 to-transparent",
+              "skew-x-[-20deg]",
+              "animate-cta-shine",
+            ].join(" ")}
           />
-          {/* Maschera: lascia visibile solo il bordo */}
-          <span className="absolute inset-[2.5px] rounded-2xl bg-white" />
         </span>
-      )}
 
-      <span className="relative z-10">{children}</span>
-    </a>
+        <span className="relative z-10">{children}</span>
+      </a>
+      </span>
     </Reveal>
   );
 }

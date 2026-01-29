@@ -135,6 +135,34 @@ body {
   50% { transform: translate3d(0, -6px, 0); }
 }
 
+/* --- CTA premium shine --- */
+@keyframes cta-shine {
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.15;
+  }
+
+  50% {
+    opacity: 0.20;
+  }
+
+  80% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateX(120%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+.animate-cta-shine {
+  animation: cta-shine 2000ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+
 /* =========================
    MOTION-SAFE (CSS)
    Mantiene DURATE/DELAY identici ai tuoi.
@@ -146,13 +174,13 @@ body {
   .animate-dot-3 { animation: dot-3 1.4s infinite; }
 
   .animate-fade-up {
-    animation: fade-up 1000ms cubic-bezier(.2,.8,.2,1) both;
-    animation-delay: 200ms;
+    animation: fade-up 1500ms cubic-bezier(.2,.8,.2,1) both;
+    animation-delay: 400ms;
   }
 
   .animate-fade-down {
     animation: fade-down 1500ms cubic-bezier(.2,.8,.2,1) both;
-    animation-delay: 200ms;
+    animation-delay: 400ms;
   }
 
   .animate-fade-down-slow {
@@ -162,18 +190,18 @@ body {
 
   .animate-fade-right {
     animation: fade-right 2000ms cubic-bezier(.2,.8,.2,1) both;
-    animation-delay: 200ms;
+    animation-delay: 400ms;
   }
 
   .animate-fade-in {
     animation: fade-in-scale-down 1000ms cubic-bezier(.2,.8,.2,1) both;
-    animation-delay: 200ms;
+    animation-delay: 400ms;
     will-change: opacity, transform;
   }
 
   .animate-fade-in-up {
     animation: fade-in-scale-up 1000ms cubic-bezier(.2,.8,.2,1) both;
-    animation-delay: 100ms;
+    animation-delay: 300ms;
     will-change: opacity, transform;
   }
 

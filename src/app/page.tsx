@@ -50,13 +50,13 @@ function BlueBox({
   return (
     <div
       className={[
-        "rounded-3xl border border-white/10 bg-[#1E3A5F]/85 shadow-lg shadow-black/10 backdrop-blur",
+        "rounded-3xl border border-white/10 bg-[#1E3A5F]/80 shadow-lg shadow-black/10 backdrop-blur",
         "p-6 sm:px-10 sm:py-8",
-        "transition-transform duration-300 hover:-translate-y-0.5",
+        "transition-transform duration-300",
         className,
       ].join(" ")}
     >
-      <div className="text-white/90">{children}</div>
+      <div className="text-white/95">{children}</div>
     </div>
   );
 }
@@ -75,7 +75,7 @@ function SoftBox({
       className={[
         "rounded-3xl border border-slate-200/60 bg-[#EEF3F8]/80 shadow-sm backdrop-blur",
         "p-6 sm:px-10 sm:py-8",
-        "transition-transform duration-300 hover:-translate-y-0.5",
+        "transition-transform duration-300",
         className,
       ].join(" ")}
     >
@@ -196,16 +196,29 @@ export default function Page() {
       <Section subtle>
         <div className="mx-auto max-w-3xl xl:max-w-none">
           <div className="space-y-6 px-4 font-sans text-base leading-relaxed text-slate-800 sm:text-lg">
-            <h2 className="text-2xl font-serif font-semibold tracking-tight text-slate-900 sm:text-3xl">
-              Il Paradosso del Volume
-            </h2>
+            {/* Blocco “key point” (premium, pulito) */}
+            <div className="relative">
+              {/* Accent line */}
+              <span className="absolute left-0 top-1 h-[calc(100%-4px)] w-0.75 rounded-full bg-[#1E3A5F]/70" />
 
-            <p>Si pensa che una campagna marketing profittevole debba avere grandi flussi di traffico.</p>
-          <Reveal inViewClassName="anim-safe-up animate-fade-in-up" delay={100}>
-            <BlueBox className="text-center">
-              <p className="text-xl font-semibold uppercase tracking-wide">Sbagliato.</p>
-            </BlueBox>
-          </Reveal>
+              <div className="pl-5 space-y-2">
+                <h2 className="text-2xl font-serif font-semibold tracking-tight text-slate-900 sm:text-3xl">
+                  Il Paradosso del Volume
+                </h2>
+
+              <p className="max-w-2xl text-slate-700 font-medium underline decoration-slate-400 decoration-2 underline-offset-4">
+
+                  Si pensa che una campagna marketing profittevole debba avere grandi flussi di traffico.
+                </p>
+              </div>
+            </div>
+
+            <Reveal inViewClassName="anim-safe-up animate-fade-in-up" delay={100}>
+              <BlueBox className="text-center my-6 lg:my-8">
+                <p className="text-2xl lg:text-3xl font-semibold uppercase tracking-wide">Sbagliato.</p>
+              </BlueBox>
+            </Reveal>
+
 
             <p>
               Avere grandi quantità di lead fuori target, impossibilitati ad acquistare e senza la necessità del tuo servizio…
